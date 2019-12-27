@@ -68,6 +68,7 @@ export default util.createRule<Options, MessageIds>({
             type: 'object',
             additionalProperties: {
               oneOf: [
+                { type: 'false' },
                 { type: 'null' },
                 { type: 'string' },
                 {
@@ -125,6 +126,9 @@ export default util.createRule<Options, MessageIds>({
 
       if (name in bannedTypes) {
         const bannedType = bannedTypes[name];
+        if (bannedType === false) {
+          continue;
+        }
         const customMessage = getCustomMessage(bannedType);
         const fixWith =
           bannedType && typeof bannedType === 'object' && bannedType.fixWith;
